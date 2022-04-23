@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import logo from "./logo.svg";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import "./App.css";
 
-const socket = io("http://localhost:8000"); // connect to backend socket server
+const socket: Socket = io("http://localhost:8000"); // connect to backend socket server
+
 
 function App() {
   const [room, setRoom] = useState("");
