@@ -4,7 +4,9 @@ import * as userClient from './exercise-related/user-client'
 import {useAuth} from './exercise-related/user-auth'
 
 const UserContext = React.createContext<null | string>(null)
-UserContext.displayName = 'UserContext'
+UserContext.displayName = 'UserContext';
+
+// context module pattern
 
 function userReducer(state: Record<string, any> = {}, action : any) {
     switch (action.type) {
