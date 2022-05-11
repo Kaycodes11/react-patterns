@@ -27,7 +27,11 @@ function Toggle({children}) {
 }
 
 function useToggle() {
-    return React.useContext<ToggleOrNull>(ToggleContext);
+    const context = React.useContext<ToggleOrNull>(ToggleContext);
+    if(!context) {
+        throw new Error('useToggle must be used within a <Toggle /> component');
+    }
+    return context;
 }
 
 
