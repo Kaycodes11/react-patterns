@@ -7,11 +7,11 @@ const noop = () => {
 }
 type AriaLabel = { "ariaLabel"?: string };
 type Props = { on: boolean, toggle?: () => void, className?: string, onClick?: () => void } & AriaLabel;
-type PropsA= { 'aria-pressed'?: boolean } & Props;
+type PropsA= { 'aria-pressed'?: boolean, getTogglerProps?: () => Props } & Props;
 
 type State = {}
 
-class Switch extends React.Component<PropsA, State> {
+class Switch extends React.Component<any, State> {
     render() {
         const {
             on,
