@@ -3,13 +3,14 @@ import {Switch} from "./exercise-related/switch";
 
 // State Reducer
 const callAll = (...fns: any[]) => (...args: any[]) => fns.forEach((fn) => fn && fn(args));
+const actionTypes = { toggle: "toggle", reset: "reset" }
 
 function toggleReducer(state: Record<string, any>, {type, initialState}) {
     switch (type) {
-        case 'toggle': {
+        case actionTypes.toggle: {
             return {on: !state.on}
         }
-        case 'reset': {
+        case actionTypes.reset: {
             return initialState;
         }
         default:
@@ -23,8 +24,8 @@ function useToggle({initialOn = false, reducer = toggleReducer}) {
     const {on} = state;
 
     // @ts-ignore
-    const toggle = () => dispatch({type: "toggle"});
-    const reset = () => dispatch({type: "reset", initialState});
+    const toggle = () => dispatch({type: actionTypes.toggle});
+    const reset = () => dispatch({type: actionTypes.reset, initialState});
 
     // @ts-ignore
     function getTogglerProps({onClick, ...props}: any = {}) {
@@ -45,8 +46,8 @@ function useToggle({initialOn = false, reducer = toggleReducer}) {
     return {on, toggle, reset, getTogglerProps, getResetterProps};
 }
 
-// export { useToggle, toggleReducer }
-// import { useToggle, toggleReducer } from "./use-toggle"
+// export { useToggle, toggleReducer, actionTypes }
+// import { useToggle, toggleReducer, actionTypes } from "./use-toggle"
 
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
     const clickedTooMuch = timesClicked >= 4;
 
     function toggleStateReducer(state, action) {
-        if (action.type === 'toggle' && clickedTooMuch) {
+        if (action.type === actionTypes.toggle && clickedTooMuch) {
             return {on: state.on};
         }
         // otherwise sent to this reducer with state, action as arguments
