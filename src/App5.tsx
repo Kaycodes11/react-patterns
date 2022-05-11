@@ -20,6 +20,15 @@ function toggleReducer(state: Record<string, any>, {type, initialState}) {
     }
 }
 
+function useControlledSwitchWarning(controlPropValue, controlPropName, componentName) {
+    const isControlled = controlPropValue != null;
+    const { current: wasControlled } = React.useRef(isControlled);
+    React.useEffect(() => {
+        warning(!(isControlled && !wasControlled), `\`useToggle\` is changing from uncontrolled to controlled. Components should not switch from uncontrolled to controlled (or vice versa). Decide between using a controlled or uncontrolled \`useToggle\` for the lifetime of the component. Check the \`on\` prop.`);
+        warning(!(!isControlled && wasControlled), `\`useToggle\` is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled \`useToggle\` for the lifetime of the component. Check the \`on\` prop.`);
+    }, [componentName, controlPropName, isControlled, wasControlled]);
+}
+
 function useToggle({initialOn = false, reducer = toggleReducer, onChange, on: controlledOn, readOnly = false}) {
     const {current: initialState} = React.useRef<{ on: boolean }>({on: initialOn});
     const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -27,11 +36,7 @@ function useToggle({initialOn = false, reducer = toggleReducer, onChange, on: co
     const onIsControlled = controlledOn != null; // it will evaluate to either true/false
     const on = onIsControlled ? controlledOn : state.on;
 
-    const {current: onWasControlled} = React.useRef<boolean>(onIsControlled);
-    React.useEffect(() => {
-        warning(!(onIsControlled && !onWasControlled), 'changing from uncontrolled to controlled');
-        warning(!(!onIsControlled && !onWasControlled), 'changing from controlled to uncontrolled');
-    }, [onIsControlled, onWasControlled]);
+    useControlledSwitchWarning(controlledOn, "on", "useToggle");
 
     const hasOnChange = Boolean(onChange);
     React.useEffect(() => {
@@ -80,7 +85,7 @@ function Toggle({on: controlledOn, onChange, readOnly}: Record<string, any>) {
 }
 
 function App() {
-    const [bothOn, setBothOn] = React.useState(false);
+    const [bothOn, setBothOn] = React.useState<boolean | undefined>(false);
     const [timesClicked, setTimesClicked] = React.useState(0);
 
     function handleToggleChange(state, action) {
