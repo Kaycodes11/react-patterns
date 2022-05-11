@@ -3,14 +3,16 @@ import * as React from 'react'
 import {symlink} from "fs";
 
 
-const noop = () => {}
-type AriaLabel = { "ariaLabel"?: string }
-type Props = { on: boolean,  toggle: () => void, className?: string, onClick: () => void } & AriaLabel;
+const noop = () => {
+}
+type AriaLabel = { "ariaLabel"?: string };
+type Props = { on: boolean, toggle?: () => void, className?: string, onClick?: () => void } & AriaLabel;
+type PropsA= { 'aria-pressed'?: boolean } & Props;
+
 type State = {}
 
-class Switch extends React.Component<Props, State> {
+class Switch extends React.Component<PropsA, State> {
     render() {
-
         const {
             on,
             className: className = '',
