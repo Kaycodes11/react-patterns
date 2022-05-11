@@ -43,18 +43,16 @@ function useToggle({initialOn = false, reducer = toggleReducer, onChange, on: co
     const onIsControlled = controlledOn != null; // it will evaluate to either true/false
     const on = onIsControlled ? controlledOn : state.on;
 
-    useControlledSwitchWarning(controlledOn, "on", "useToggle");
-    useOnChangeReadonlyWarning(controlledOn, "on", "useToggle", Boolean(onChange), readOnly, 'readOnly', 'initialOn', 'onChange');
+    // here breaking the rule of hooks by wrapping within an if-block so
+    if(process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useControlledSwitchWarning(controlledOn, "on", "useToggle");
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useOnChangeReadonlyWarning(controlledOn, "on", "useToggle", Boolean(onChange), readOnly, 'readOnly', 'initialOn', 'onChange');
+    }
 
-    const hasOnChange = Boolean(onChange);
-    React.useEffect(() => {
-        warning(!(!hasOnChange && onIsControlled && !readOnly), `An \`on\` prop was provided to useToggle without an \`onChange\` handler. This will render a read-only toggle. If you want to be mutable, use \`initialOn\`. Otherwise, set either  \`onChange\` or \`readOnly\`.`);
-        // if (!hasOnChange && onIsControlled && !readOnly) {
-        // console.error(`An \`on\` prop was provided to useToggle without an \`onChange\` handler. This will render a read-only toggle. If you want to be multiple, use \`initialOn\`. Otherwise, set either  \`onChange\` or \`readOnly\`.`);
-        // }
-    }, [hasOnChange, onIsControlled, readOnly]);
 
-    function dispatchWithChange(action) {
+    function dispatchWithOnChange(action) {
         if (!onIsControlled) {
             dispatch(action);
         }
@@ -63,8 +61,8 @@ function useToggle({initialOn = false, reducer = toggleReducer, onChange, on: co
     }
 
     // @ts-ignore
-    const toggle = () => dispatchWithChange({type: actionTypes.toggle});
-    const reset = () => dispatchWithChange({type: actionTypes.reset, initialState});
+    const toggle = () => dispatchWithOnChange({type: actionTypes.toggle});
+    const reset = () => dispatchWithOnChange({type: actionTypes.reset, initialState});
 
     // @ts-ignore
     function getTogglerProps({onClick, ...props}: any = {}) {
