@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
 import logo from "./logo.svg";
-import { io, Socket } from "socket.io-client";
+// import { io, Socket } from "socket.io-client";
 import "./App.css";
 
-const socket: Socket = io("http://localhost:8000"); // connect to backend socket server
+// const socket: Socket = io("http://localhost:8000"); // connect to backend socket server
 
 
 function App() {
-  const [room, setRoom] = useState("");
-  const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
+  // const [room, setRoom] = useState("");
+  // const [message, setMessage] = useState("");
+  // const [messageReceived, setMessageReceived] = useState("");
 
-  const joinRoom = () => {
-    if (room !== '')  {
-      socket.emit("join_room", room);
-    }
-  };
+  // const joinRoom = () => {
+  //   if (room !== '')  {
+  //     socket.emit("join_room", room);
+  //   }
+  // };
 
-  const sendMessage = () => {
-    // socket.emit("hello from the client", 5, "6", { 7: Uint8Array.from([8]) });
-    socket.emit("send_message", { message, room });
-  };
+  // const sendMessage = () => {
+  //   console.log('ww')
+  //   // socket.emit("hello from the client", 5, "6", { 7: Uint8Array.from([8]) });
+  //   socket.emit("send_message", { message, room });
+  // };
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     setMessageReceived(data.message);
+  //   });
+  // }, [socket]);
 
   return (
     <div className="App">
@@ -45,21 +46,21 @@ function App() {
         </a>
         <div>
 
-        <input
-            type={"text"}
-            placeholder="Room Number"
-            onChange={(e) => setRoom(e.target.value)}
-          />
-          <button onClick={joinRoom}>Join Room</button>
+        {/*<input*/}
+        {/*    type={"text"}*/}
+        {/*    placeholder="Room Number"*/}
+        {/*    onChange={(e) => setRoom(e.target.value)}*/}
+        {/*  />*/}
+          {/*<button onClick={joinRoom}>Join Room</button>*/}
           <hr/>
-          <input
-            type={"text"}
-            placeholder="write message"
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button onClick={sendMessage}>send message</button>
-          <h1>Message: </h1>
-          {messageReceived}
+          {/*<input*/}
+          {/*  type={"text"}*/}
+          {/*  placeholder="write message"*/}
+          {/*  onChange={(e) => setMessage(e.target.value)}*/}
+          {/*/>*/}
+          {/*<button onClick={sendMessage}>send message</button>*/}
+          {/*<h1>Message: </h1>*/}
+          {/*{messageReceived}*/}
         </div>
       </header>
     </div>
