@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App5";
+import App from "./App-debpounce";
 import reportWebVitals from "./reportWebVitals";
 
 const rootElement = document.getElementById('root');
