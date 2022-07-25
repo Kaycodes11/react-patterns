@@ -1,70 +1,36 @@
-import { useState, useEffect } from "react";
-import logo from "./logo.svg";
-// import { io, Socket } from "socket.io-client";
-import "./App.css";
+// Simple Data-fetching here
 
-// const socket: Socket = io("http://localhost:8000"); // connect to backend socket server
+import * as React from 'react'
+import {fetchPokemon, PokemonDataView, PokemonErrorBoundary, PokemonInfoFallback} from "./pokemon";
+import {createResource} from "./utils";
 
 
-function App() {
-  // const [room, setRoom] = useState("");
-  // const [message, setMessage] = useState("");
-  // const [messageReceived, setMessageReceived] = useState("");
+let pokemonResource = createResource(fetchPokemon('pikachu'))
 
-  // const joinRoom = () => {
-  //   if (room !== '')  {
-  //     socket.emit("join_room", room);
-  //   }
-  // };
-
-  // const sendMessage = () => {
-  //   console.log('ww')
-  //   // socket.emit("hello from the client", 5, "6", { 7: Uint8Array.from([8]) });
-  //   socket.emit("send_message", { message, room });
-  // };
-
-  // useEffect(() => {
-  //   socket.on("receive_message", (data) => {
-  //     setMessageReceived(data.message);
-  //   });
-  // }, [socket]);
-
+function PokemonInfo() {
+  const pokemon = pokemonResource.read()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div>
-
-        {/*<input*/}
-        {/*    type={"text"}*/}
-        {/*    placeholder="Room Number"*/}
-        {/*    onChange={(e) => setRoom(e.target.value)}*/}
-        {/*  />*/}
-          {/*<button onClick={joinRoom}>Join Room</button>*/}
-          <hr/>
-          {/*<input*/}
-          {/*  type={"text"}*/}
-          {/*  placeholder="write message"*/}
-          {/*  onChange={(e) => setMessage(e.target.value)}*/}
-          {/*/>*/}
-          {/*<button onClick={sendMessage}>send message</button>*/}
-          {/*<h1>Message: </h1>*/}
-          {/*{messageReceived}*/}
+      <div>
+        <div className="pokemon-info__img-wrapper">
+          <img src={pokemon.image} alt={pokemon.name} />
         </div>
-      </header>
-    </div>
-  );
+        <PokemonDataView pokemon={pokemon} />
+      </div>
+  )
 }
 
-export default App;
+function App() {
+  return (
+      <div className="pokemon-info-app">
+        <div className="pokemon-info">
+          <PokemonErrorBoundary>
+            <React.Suspense fallback={<PokemonInfoFallback name="Pikachu" />}>
+              <PokemonInfo />
+            </React.Suspense>
+          </PokemonErrorBoundary>
+        </div>
+      </div>
+  )
+}
+
+export default App
