@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import useLocalStorageState from "./utils/useLocalStorageState";
 
-// useState
-function Greeting({initialName = ''}) {
-    const [name, setName] = React.useState(initialName)
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+function Greeting({ initialName = '' }) {
+    const [name, setName] = useLocalStorageState('name', initialName)
+
+    function handleChange(event) {
         setName(event.target.value)
     }
+
     return (
         <div>
             <form>
@@ -17,6 +19,8 @@ function Greeting({initialName = ''}) {
     )
 }
 
-export default function App () {
-    return <Greeting initialName="Griffin" />
+function App() {
+    return <Greeting />
 }
+
+export default App;
