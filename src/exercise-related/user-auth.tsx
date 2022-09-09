@@ -7,6 +7,7 @@ import * as React from 'react';
 const AuthContext = React.createContext({
     user: {username: 'jakiechan', tagline: '', bio: ''},
 });
+
 AuthContext.displayName = 'AuthContext'
 
 const AuthProvider = ({user, ...props}: Record<string, any>) => (
@@ -15,7 +16,7 @@ const AuthProvider = ({user, ...props}: Record<string, any>) => (
 
 // this function just consumers auth context and returns it
 function useAuth() {
-    return React.useContext(AuthContext)
+    return React.useContext(AuthContext);
 }
 
 export {AuthProvider, useAuth}

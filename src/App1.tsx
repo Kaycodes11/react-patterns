@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import {dequal} from 'dequal'
+import {dequal} from 'dequal';
 import * as userClient from './exercise-related/user-client'
 import {useAuth} from './exercise-related/user-auth'
 
@@ -51,7 +51,7 @@ function userReducer(state: Record<string, any> = {}, action : any) {
 
 // @ts-ignore
 function UserProvider({children} ) {
-    const {user} = useAuth()
+    const {user} = useAuth();
     // console.log('HERE: ', JSON.stringify(useAuth(), null, 4));
 
     const [state, dispatch] = React.useReducer(userReducer, {
@@ -59,8 +59,8 @@ function UserProvider({children} ) {
         error: null,
         storedUser: user,
         user,
-    })
-    const value = [state, dispatch]
+    });
+    const value = [state, dispatch];
     // @ts-ignore
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
@@ -70,7 +70,7 @@ function useUser() {
     if (context === undefined) {
         throw new Error(`useUser must be used within a UserProvider`)
     }
-    return context
+    return context;
 }
 
 async function updateUser(dispatch, user, updates) {
@@ -89,14 +89,14 @@ async function updateUser(dispatch, user, updates) {
 // form
 function UserSettings() {
     // @ts-ignore
-    const [{user, status, error}, userDispatch] = useUser()
+    const [{user, status, error}, userDispatch] = useUser();
 
-    const isPending = status === 'pending'
-    const isRejected = status === 'rejected'
+    const isPending = status === 'pending';
+    const isRejected = status === 'rejected';
 
-    const [formState, setFormState] = React.useState(user)
+    const [formState, setFormState] = React.useState(user);
 
-    const isChanged = !dequal(user, formState)
+    const isChanged = !dequal(user, formState);
 
     function handleChange(e) {
         setFormState({...formState, [e.target.name]: e.target.value})
@@ -180,12 +180,12 @@ function UserSettings() {
                 {isRejected ? <pre style={{color: 'red'}}>{error.message}</pre> : null}
             </div>
         </form>
-    )
+    );
 }
 
 function UserDataDisplay() {
     // @ts-ignore
-    const [{user}] = useUser()
+    const [{user}] = useUser();
     return <pre>{JSON.stringify(user, null, 2)}</pre>
 }
 

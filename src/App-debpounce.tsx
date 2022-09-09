@@ -33,10 +33,10 @@ export default function App () {
             setResults([]);
         }
 
-    }, [debouncedSearchTerm])
+    }, [debouncedSearchTerm]);
 
     return (
-        <div style={{ padding: '15px' }}>
+        <div style={{padding: '15px'}}>
             <div>
                 <input
                     style={{
@@ -66,10 +66,10 @@ export default function App () {
                         src={`${result.thumbnail.path}/portrait_incredible.${
                             result.thumbnail.extension
                         }`}
-                        style={{ width: '100%' }}
+                        style={{width: '100%'}}
                     />
                 </div>
             ))}
         </div>
-    )
+    );
 }

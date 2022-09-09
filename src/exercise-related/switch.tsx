@@ -1,6 +1,5 @@
-import './switch.styles.css'
 import * as React from 'react'
-import {symlink} from "fs";
+import './switch.styles.css'
 
 
 const noop = () => {

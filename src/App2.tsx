@@ -5,7 +5,8 @@ import {Switch} from "./exercise-related/switch";
 interface Toggle {
     on: boolean;
     toggle: () => void
-};
+}
+
 type ToggleOrNull = Toggle | null;
 
 // compound component
@@ -28,7 +29,7 @@ function Toggle({children}) {
 
 function useToggle() {
     const context = React.useContext<ToggleOrNull>(ToggleContext);
-    if(!context) {
+    if (!context) {
         throw new Error('useToggle must be used within a <Toggle /> component');
     }
     return context;
@@ -49,7 +50,7 @@ const ToggleOn = ({children}: { children: React.ReactNode }): any => {
 // const ToggleOff = ({on, children}: Record<string, any>) => on ? null : children;
 
 // making it more flexible
-const ToggleOff = ({children}: {children: React.ReactNode}): any => {
+const ToggleOff = ({children}: { children: React.ReactNode }): any => {
     // @ts-ignore
     const {on} = useToggle();
     return on ? null : children;
@@ -69,7 +70,6 @@ const ToggleButton = (props: Record<string, any>) => {
 
 
 function App() {
-
     return (
         <div>
             <Toggle>

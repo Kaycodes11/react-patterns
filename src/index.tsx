@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App-debpounce";
+import App from "./App5";
 import reportWebVitals from "./reportWebVitals";
 
 const rootElement = document.getElementById('root');
 if(!rootElement) throw new Error(`Failed to find the root element`);
 
 // @ts-ignore
-// const root1 = React.createRoot(document.getElementById('root')!); 
+// const root1 = React.createRoot(document.getElementById('root')!);
 // telling ts compiler its value would never be  null
 
 // @ts-ignore
